@@ -6,10 +6,8 @@
 
 html {
   scroll-behavior: smooth;
-}
+    scroll-padding-top: 80px;
 
-html {
-  scroll-padding-top: 80px;
 }
 
 @media (min-width: 768px) {

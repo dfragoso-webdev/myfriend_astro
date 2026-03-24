@@ -23,9 +23,9 @@ const { title = "My Friend", lang = "es" } = Astro.props as Props;
   </head>
   <body>
     <I18nProvider lang={lang}>
-      <Navbar client:idle />
-      <main class="pt-20 md:pt-24"><slot /></main>
-      <Footer client:load />
+      <Navbar client:visible />
+      <main><slot /></main>
+      <Footer client:visible />
     </I18nProvider>
   </body>
 </html>

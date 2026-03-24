@@ -9,6 +9,7 @@ import LuxeIslandBand from "./components/LuxeIslandBand/LuxeIslandBand";
 import Products from "../products/Products";
 import PremiumSelect from "../products/PremiumSelect";
 import Stores from "./components/Stores/Stores";
+import { video as videoAssets } from "@/mediaRoutes";
 
 interface Props {
   lang: string;
@@ -18,27 +19,62 @@ interface Props {
   bg?: string;
 }
 
-const { 
-  lang, 
-  bannerImages, 
-  branches, 
-  videoSrc = "", 
-  bg = "" 
+const {
+  lang,
+  bannerImages,
+  branches,
+  videoSrc = videoAssets.myfriend,
+  bg = "",
 } = Astro.props;
 ---
 
 <main>
-  <Banner
-    images={bannerImages?.images || []}
-    imagesMobile={bannerImages?.imagesMobile || []}
-    client:load
-  />
-  <About videoSrc={videoSrc} bg={bg} client:load />
-  <Stores lang={lang} client:load />
-  <BranchesCarousel branches={branches || []} lang={lang} client:load />
-  <PremiumSelect client:load />
-  <Products client:load />
-  <HomeService client:load />
-  <LuxeIslandBand client:load />
-  <FollowUs client:load />
+  <section id="home">
+    <Banner
+      images={bannerImages?.images || []}
+      imagesMobile={bannerImages?.imagesMobile || []}
+      client:only="react"
+    />
+  </section>
+
+  <section id="about-us">
+    <About videoSrc={videoSrc} bg={bg} client:visible />
+  </section>
+
+  <section id="stores">
+    <Stores lang={lang} client:visible />
+  </section>
+
+  <section id="premium-select">
+    <PremiumSelect client:visible />
+  </section>
+
+  <section id="products">
+    <Products client:visible />
+  </section>
+
+  <section id="home-service">
+    <HomeService client:visible  />
+  </section>
+
+  <section id="luxe-island">
+    <LuxeIslandBand client:visible />
+  </section>
+
+  <section id="follow-us">
+    <FollowUs client:visible />
+  </section>
+
+  <BranchesCarousel branches={branches || []} lang={lang} client:visible />
 </main>
+
+<script>
+  if (window.location.hash) {
+    window.history.pushState(
+      {},
+      "",
+      window.location.pathname + window.location.search,
+    );
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
+</script>

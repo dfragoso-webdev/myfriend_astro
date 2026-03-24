@@ -11,47 +11,48 @@ interface AboutVideoProps {
   };
 }
 
+// src/features/landing/components/About/AboutVideo.tsx
+
 export const AboutVideo: React.FC<AboutVideoProps> = ({
   videoRef,
   videoSrc,
   isVisible,
   stats
 }) => {
-  // Control adicional de reproducción
   useEffect(() => {
-    if (videoRef.current) {
+    const video = videoRef.current;
+    if (video) {
+      // Forzamos el silenciado por código para asegurar el autoplay
+      video.muted = true; 
+      
       if (isVisible) {
-        videoRef.current.play().catch(err => {
-          console.log('Error playing video:', err);
-        });
+        // El timeout evita conflictos con la carga inicial del DOM
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(err => console.log('Autoplay bloqueado:', err));
+        }
       } else {
-        videoRef.current.pause();
+        video.pause();
       }
     }
   }, [isVisible, videoRef]);
 
   return (
-    <div
-      className={`relative order-1 lg:order-2 transition-all duration-1000 delay-300 transform ${
-        isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
-      }`}
-    >
-      <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px]">
-        <div className="absolute -inset-3 bg-gradient-to-r from-primary-color/20 to-luxe-island/20 rounded-2xl blur-xl opacity-50" />
-
-        <div className="relative overflow-hidden rounded-xl md:rounded-2xl bg-black/5 shadow-2xl">
+    <div className={`relative ... ${isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"}`}>
+      <div className="relative mx-auto w-full max-w-[340px]">
+        <div className="relative overflow-hidden rounded-2xl bg-black shadow-2xl">
           <video
             ref={videoRef}
             muted
             playsInline
             loop
             autoPlay
-            controls
             preload="auto"
+            controls={true}
+            src={videoSrc} 
             className="w-full aspect-[9/16] object-cover"
           >
-            <source src={videoSrc} type="video/mp4" />
-            Tu navegador no soporta la reproducción de video.
+            Tu navegador no soporta video.
           </video>
         </div>
       </div>

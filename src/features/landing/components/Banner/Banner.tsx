@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback, useRef, useMemo } from "react";
-import { useTranslation } from "react-i18next"; // 1. Importar hook
+// src/features/landing/components/Banner/Banner.tsx
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useTranslation } from "@/i18n";
 import { svgs } from "@/mediaRoutes";
 
 interface BannerProps {
@@ -9,10 +10,25 @@ interface BannerProps {
   transitionDuration?: number;
 }
 
-// 2. Definir interfaz para el contenido del JSON
 interface BannerSlideContent {
   subtitle: string;
   title: string;
+}
+
+// Hook simple para detectar mobile SIN romper SSR
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return isMobile;
 }
 
 const Banner = ({
@@ -21,47 +37,24 @@ const Banner = ({
   autoPlayInterval = 5000,
   transitionDuration = 700,
 }: BannerProps) => {
-  // 3. Inicializar traducción apuntando al namespace "banner"
   const { t } = useTranslation("banner");
+  const slidesContent = t("slides", { returnObjects: true }) as BannerSlideContent[];
 
-  // 4. Obtener el array de slides desde el JSON
-  const slidesContent = t("slides", {
-    returnObjects: true,
-  }) as BannerSlideContent[];
+  const isMobile = useIsMobile();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
 
   const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
-  const progressRef = useRef<NodeJS.Timeout | null>(null);
   const totalSlides = images.length;
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  useEffect(() => {
-    if (!autoPlayInterval || isHovered) return;
-    setProgress(0);
-
-    progressRef.current = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) return 100;
-        return prev + 100 / (autoPlayInterval / 100);
-      });
-    }, 100);
-
-    return () => {
-      if (progressRef.current) clearInterval(progressRef.current);
-    };
-  }, [currentIndex, autoPlayInterval, isHovered]);
+  // 🔥 Imagen segura (evita flicker de picture)
+  const getImage = (i: number) => {
+    if (isMobile === null) return images[i]; // SSR fallback
+    return isMobile ? imagesMobile[i] || images[i] : images[i];
+  };
 
   const handleNext = useCallback(() => {
     if (isTransitioning) return;
@@ -77,132 +70,124 @@ const Banner = ({
     setTimeout(() => setIsTransitioning(false), transitionDuration);
   }, [isTransitioning, totalSlides, transitionDuration]);
 
+  // 🔥 Autoplay estable
   useEffect(() => {
     if (!autoPlayInterval || isHovered) return;
+
     autoPlayRef.current = setInterval(handleNext, autoPlayInterval);
     return () => {
       if (autoPlayRef.current) clearInterval(autoPlayRef.current);
     };
   }, [handleNext, autoPlayInterval, isHovered]);
 
-  const onTouchStart = (e: React.TouchEvent) =>
+  // 🔥 Touch
+  const onTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
+  };
+
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStart === null) return;
-    const touchEnd = e.changedTouches[0].clientX;
-    const diff = touchStart - touchEnd;
+
+    const diff = touchStart - e.changedTouches[0].clientX;
+
     if (Math.abs(diff) > 50) {
       diff > 0 ? handleNext() : handlePrev();
     }
+
     setTouchStart(null);
   };
-
-  const displayImages = useMemo(() => {
-    return images.map((img, index) => ({
-      desktop: img,
-      mobile: imagesMobile[index] || img,
-    }));
-  }, [images, imagesMobile]);
 
   if (!images.length) return null;
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-black"
-      style={{ height: "clamp(400px, 70vh, 85vh)" }}
+      className="
+        relative w-full overflow-hidden group/banner
+        h-[420px] md:h-[520px] lg:h-[620px]
+      "
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      role="region"
-      aria-label="Carousel"
     >
+      {/* SLIDER */}
       <div
-        className="flex h-full w-full transition-transform will-change-transform"
+        className="flex h-full w-full"
         style={{
           transform: `translateX(-${currentIndex * 100}%)`,
-          transitionDuration: `${transitionDuration}ms`,
-          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: `transform ${transitionDuration}ms cubic-bezier(0.4,0,0.2,1)`,
+          willChange: "transform",
+          backfaceVisibility: "hidden",
         }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        {displayImages.map((img, i) => (
-          <div key={i} className="relative h-full w-full flex-shrink-0">
-            <picture>
-              <source media="(max-width: 768px)" srcSet={img.mobile} />
+        {images.map((_, i) => {
+          const src = getImage(i);
+
+          return (
+            <div key={i} className="relative h-full w-full flex-shrink-0">
+              
               <img
-                src={img.desktop}
+                src={src}
                 alt={slidesContent[i]?.title || ""}
                 className="h-full w-full object-cover select-none"
-                loading={i === 0 ? "eager" : "lazy"}
+                width={1920}
+                height={800}
+                loading="eager"
+                fetchPriority={i === 0 ? "high" : "auto"}
+                decoding="async"
               />
-            </picture>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+              {/* OVERLAY */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-            {/* 5. TEXTO RENDERIZADO DESDE i18n */}
-            <div className="absolute bottom-0 left-0 right-0 p-8 md:p-20 text-white">
-              <div className="max-w-7xl mx-auto">
-                {i === currentIndex && (
-                  <div className="overflow-hidden">
-                    <p className="text-md md:text-lg uppercase tracking-widest text-white/80 mb-3 animate-fadeInUp">
+              {/* TEXTO */}
+              {i === currentIndex && (
+                <div className="absolute inset-x-0 bottom-[12%] text-white px-6 md:px-20">
+                  <div className="max-w-7xl mx-auto">
+                    <p className="text-md md:text-xl uppercase tracking-widest text-white/80 mb-2 animate-fadeInUp">
                       {slidesContent[i]?.subtitle}
                     </p>
-                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold max-w-3xl leading-tight animate-fadeInUp animation-delay-200">
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold max-w-4xl leading-tight animate-fadeInUp delay-200">
                       {slidesContent[i]?.title}
                     </h2>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
-      {/* Navegación y Otros Controles (Se mantienen igual) */}
-      <div className="hidden md:block">
+      {/* BOTONES */}
+      <div className="absolute inset-0 flex items-center justify-between p-4 z-30 pointer-events-none">
         <button
           onClick={handlePrev}
-          className="absolute left-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all opacity-0 group-hover/banner:opacity-100"
+          className="pointer-events-auto p-3 md:p-4 rounded-full bg-black/30 backdrop-blur-md text-white hover:bg-white/20 transition opacity-0 group-hover/banner:opacity-100"
         >
-          <img src={svgs.prevButtonLI} className="w-6 h-6 invert" alt="" />
+          <img src={svgs.prevButtonLI} className="w-5 h-5 invert" />
         </button>
+
         <button
           onClick={handleNext}
-          className="absolute right-6 top-1/2 -translate-y-1/2 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all opacity-0 group-hover/banner:opacity-100"
+          className="pointer-events-auto p-3 md:p-4 rounded-full bg-black/30 backdrop-blur-md text-white hover:bg-white/20 transition opacity-0 group-hover/banner:opacity-100"
         >
-          <img src={svgs.nextButtonLI} className="w-6 h-6 invert" alt="" />
+          <img src={svgs.nextButtonLI} className="w-5 h-5 invert" />
         </button>
       </div>
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-3">
+      {/* INDICADORES */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
         {images.map((_, i) => (
           <button
             key={i}
             onClick={() => !isTransitioning && setCurrentIndex(i)}
-            className="group relative h-1.5 transition-all duration-500 overflow-hidden rounded-full bg-white/30"
-            style={{ width: currentIndex === i ? "3rem" : "1.5rem" }}
-          >
-            {currentIndex === i && (
-              <div
-                className="absolute inset-0 bg-white"
-                style={{
-                  transform: `scaleX(${progress / 100})`,
-                  transformOrigin: "left",
-                }}
-              />
-            )}
-          </button>
+            className={`h-1.5 rounded-full transition-all duration-500 ${
+              currentIndex === i ? "w-12 bg-white" : "w-6 bg-white/40"
+            }`}
+          />
         ))}
       </div>
 
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeInUp { animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-        .animation-delay-200 { animation-delay: 0.2s; opacity: 0; }
-      `}</style>
     </section>
   );
 };
