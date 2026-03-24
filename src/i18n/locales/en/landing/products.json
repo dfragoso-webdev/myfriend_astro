@@ -1,0 +1,20 @@
+{
+  "pharmacy": "PHARMACY",
+  "clothes": "CLOTHES",
+  "beverages": "BEVERAGES",
+  "handcraft": "HANDCRAFT & SOUVENIRS",
+  "grocery": "GROCERY",
+  "deli": "DELI",
+  "kids": "KIDS",
+  "sunscreens": "SUNSCREENS",
+  "products_title": "PRODUCTS",
+  "products_subtitle": "Discover our wide variety of products for every need",
+  "pharmacy_description": "Medicines and personal care",
+  "clothes_description": "Fashion for the whole family",
+  "beverages_description": "Soft drinks, juices and more",
+  "handcraft_description": "Local handmade products",
+  "grocery_description": "Pantry products",
+  "deli_description": "Prepared foods",
+  "kids_description": "Everything for the little ones",
+  "sunscreens_description": "Premium sun protection"
+}

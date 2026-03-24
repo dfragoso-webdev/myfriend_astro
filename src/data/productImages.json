@@ -1,0 +1,22 @@
+[
+  {
+    "key": "towels",
+    "image": "https://th.bing.com/th/id/OIP.R5AZcQMAXhk3v8Twha52ggHaE1?rs=1&pid=ImgDetMain"
+  },
+  {
+    "key": "beverages",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVkyjuezHjb6Td3bKhTKnI738xpPoY_gMDIw&s"
+  },
+  {
+    "key": "hats",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9OIvu5e_lVzaSSRJlnRjuSG8XPAHiR1Kg_Q&s"
+  },
+  {
+    "key": "beach_toys",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqmtSZkc1qqL4Ql8yVHYDajjeA0u6HtuLskg&s"
+  },
+  {
+    "key": "sunglasses",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZRaXuLaFUVIcFn0abUEKNaHxc3U2Xn3HL0g&s"
+  }
+]

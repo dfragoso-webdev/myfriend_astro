@@ -1,0 +1,44 @@
+---
+// src/features/landing/Landing.astro
+import About from "./components/About/About";
+import Banner from "./components/Banner/Banner";
+import BranchesCarousel from "./components/Branches/BranchesCarousel";
+import FollowUs from "./components/FollowUs/FollowUs";
+import HomeService from "./components/HomeService/HomeService";
+import LuxeIslandBand from "./components/LuxeIslandBand/LuxeIslandBand";
+import Products from "../products/Products";
+import PremiumSelect from "../products/PremiumSelect";
+import Stores from "./components/Stores/Stores";
+
+interface Props {
+  lang: string;
+  bannerImages?: { images: string[]; imagesMobile: string[] };
+  branches?: any[];
+  videoSrc?: string;
+  bg?: string;
+}
+
+const { 
+  lang, 
+  bannerImages, 
+  branches, 
+  videoSrc = "", 
+  bg = "" 
+} = Astro.props;
+---
+
+<main>
+  <Banner
+    images={bannerImages?.images || []}
+    imagesMobile={bannerImages?.imagesMobile || []}
+    client:load
+  />
+  <About videoSrc={videoSrc} bg={bg} client:load />
+  <Stores lang={lang} client:load />
+  <BranchesCarousel branches={branches || []} lang={lang} client:load />
+  <PremiumSelect client:load />
+  <Products client:load />
+  <HomeService client:load />
+  <LuxeIslandBand client:load />
+  <FollowUs client:load />
+</main>

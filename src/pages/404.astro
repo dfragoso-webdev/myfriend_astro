@@ -1,0 +1,76 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="404 - Página no encontrada">
+
+  <section class="relative min-h-screen flex items-center justify-center bg-neutral-950 text-white overflow-hidden px-6">
+
+    <!-- 🔥 BACKGROUND DECOR -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary rounded-full blur-3xl"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-white/20 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative text-center max-w-2xl z-10">
+
+      <!-- LOGO -->
+      <div class="mb-6">
+        <span class="text-xl tracking-widest uppercase text-neutral-400">
+          MyFriend
+        </span>
+      </div>
+
+      <!-- 404 -->
+      <h1 class="text-8xl md:text-[140px] font-extrabold leading-none tracking-tight bg-gradient-to-r from-white to-neutral-400 bg-clip-text text-transparent">
+        404
+      </h1>
+
+      <!-- TITLE -->
+      <h2 class="text-2xl md:text-3xl font-semibold mt-4 mb-4">
+        Esta página se perdió en el camino
+      </h2>
+
+      <!-- DESCRIPTION -->
+      <p class="text-neutral-400 mb-10 max-w-lg mx-auto">
+        Puede que el enlace esté roto o que el contenido haya sido movido.
+        Pero no te preocupes, tenemos mucho más que mostrarte.
+      </p>
+
+      <!-- ACTIONS -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+
+        <a
+          href="/"
+          class="px-7 py-3 rounded-full bg-white text-black font-semibold hover:scale-105 transition duration-300 shadow-lg"
+        >
+          Volver al inicio
+        </a>
+
+        <button
+          onclick="history.back()"
+          class="px-7 py-3 rounded-full border border-white/30 hover:bg-white/10 transition duration-300"
+        >
+          Regresar
+        </button>
+
+      </div>
+
+      <!-- QUICK LINKS -->
+      <div class="mt-12 text-sm text-neutral-500">
+        <p class="mb-3">También puedes ir a:</p>
+        <div class="flex flex-wrap justify-center gap-4">
+
+          <a href="/es" class="hover:text-white transition">Inicio</a>
+          <a href="/es#about-us" class="hover:text-white transition">Nosotros</a>
+          <a href="/es#products" class="hover:text-white transition">Productos</a>
+          <a href="/es#stores" class="hover:text-white transition">Tiendas</a>
+
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+</Layout>

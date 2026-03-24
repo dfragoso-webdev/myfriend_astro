@@ -1,0 +1,68 @@
+{
+    "cancun": {
+      "title": "CANCÚN",
+      "images": [
+        {
+          "image": "../img/cun/Marina.jpg",
+          "title": "MARINA DEL REY",
+          "address": "Blvd. Kukulcán Km. 15.6, Local 7\nZ.H. Cancún Q. Roo",
+          "email": "mariadelrey@myfriend.mx",
+          "phone": "(998) 840 7127"
+        },
+        {
+          "image": "../img/cun/Nautilus.jpg",
+          "title": "NAUTILUS",
+          "address": "Blvd. Kukulcán Km. 3.5, Local 20\n y 21 Z.H. Cancún Q. Roo",
+          "email": "gcmnautilus@myfriend.mx",
+          "phone": "(998) 849 5173"
+        },
+        {
+          "image": "../img/cun/Caribe.jpg",
+          "title": "CARIBE",
+          "address": "Blvd. Kukulcán Km. 5.5, Zona Hotelera\n Cancún Q. Roo",
+          "email": "riu.caribe@myfriend.mx",
+          "phone": "(998) 849 5034"
+        }
+      ]
+    },
+    "playa": {
+      "title": "PLAYA DEL CARMEN",
+      "images": [
+        {
+          "image": "../img/playa/Yucatan.jpg",
+          "title": "YUCATÁN",
+          "address": "Av. Xaman-ha Mz. 9 Lt.1\nPlayacar fase II",
+          "email": "gcmriuyucatan@myfriend.mx",
+          "phone": "(984) 803 5601"
+        },
+        {
+          "image": "../img/playa/Galerias.jpg",
+          "title": "GALERÍAS",
+          "address": "Av. Xaman-ha Mz. 25 Lt. 25, 26\nPlayacar fase II",
+          "email": "galerias@myfriend.mx",
+          "phone": "(984) 668 8144"
+        },
+        {
+          "image": "../img/playa/Allegro.jpg",
+          "title": "ALLEGRO",
+          "address": "Fraccionamiento Playacar fase II\nPCN Colonia Centro",
+          "email": "allegro@myfriend.mx",
+          "phone": "(984) 859 9575"
+        },
+        {
+          "image": "../img/playa/Riviera.jpg",
+          "title": "RIVIERA",
+          "address": "Av. Xaman-ha Mz. 3 Lt.1\nPlayacar fase II",
+          "email": "gcmriuriviera@myfriend.mx",
+          "phone": "(984) 879 4493"
+        },
+        {
+          "image": "../img/playa/RoyalHideaway.jpg",
+          "title": "ROYAL HIDEAWAY",
+          "address": "BDL Playa Car, Lt. Hotelero No. 6\nInt. Hotel Royal Hideaway",
+          "email": "royalhideaway@myfriend.mx",
+          "phone": "(984) 859 9416"
+        }
+      ]
+    }
+  }

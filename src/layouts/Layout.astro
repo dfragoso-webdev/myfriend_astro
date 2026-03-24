@@ -1,23 +1,31 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+// src/layouts/Layout.astro
+import "@/styles/globals.css";
+import Navbar from "@/shared/components/Navigation/Navbar";
+import Footer from "@/shared/components/Footer/Footer"; // ahora .tsx
+import { I18nProvider } from "@/i18n/I18nProvider";
+import type { Language } from "@/i18n/constants";
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title?: string;
+  lang?: Language;
+}
+
+const { title = "My Friend", lang = "es" } = Astro.props as Props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <I18nProvider lang={lang}>
+      <Navbar client:idle />
+      <main class="pt-20 md:pt-24"><slot /></main>
+      <Footer client:load />
+    </I18nProvider>
+  </body>
+</html>

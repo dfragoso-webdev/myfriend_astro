@@ -1,0 +1,20 @@
+{
+  "pharmacy": "FARMACIA",
+  "clothes": "ROPA",
+  "beverages": "BEBIDAS",
+  "handcraft": "ARTESANÍAS Y SOUVENIRS",
+  "grocery": "VARIEDAD DE COMESTIBLES",
+  "deli": "DELI",
+  "kids": "NIÑOS",
+  "sunscreens": "BLOQUEADORES",
+  "products_title": "PRODUCTOS",
+  "products_subtitle": "Descubre nuestra amplia variedad de productos para cada necesidad",
+  "pharmacy_description": "Medicamentos y cuidado personal",
+  "clothes_description": "Moda para toda la familia",
+  "beverages_description": "Refrescos, jugos y más",
+  "handcraft_description": "Productos artesanales locales",
+  "grocery_description": "Productos de despensa",
+  "deli_description": "Comidas preparadas",
+  "kids_description": "Todo para los más pequeños",
+  "sunscreens_description": "Protección solar premium"
+}

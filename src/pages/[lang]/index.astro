@@ -1,0 +1,30 @@
+---
+// src/pages/[lang]/index.astro
+import Layout from "@/layouts/Layout.astro";
+import Landing from "@/features/landing/Landing.astro";
+import { LANGUAGES, DEFAULT_LANG, type Language } from "@/i18n/constants";
+import { svgs } from "@/mediaRoutes";
+
+export function getStaticPaths() {
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Language };
+
+if (!lang || !LANGUAGES.includes(lang)) {
+  return Astro.redirect(`/${DEFAULT_LANG}`);
+}
+
+// Definir las imágenes del banner
+const bannerImages = {
+  images: [svgs.banner1, svgs.banner2, svgs.banner3, svgs.banner4],
+  imagesMobile: [svgs.mbanner1, svgs.mbanner2, svgs.mbanner3, svgs.mbanner4]
+};
+---
+
+<Layout lang={lang} title="My Friend">
+  <Landing 
+    lang={lang} 
+    bannerImages={bannerImages}
+  />
+</Layout>
