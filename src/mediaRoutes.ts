@@ -85,21 +85,21 @@ interface Video {
 export const images: Images = {
   mfLogo: "/img/mf-logo.webp",
   //foto/cun
-  caribe: "/img/cun/Caribe.jpg",
-  marina: "/img/cun/Marina.jpg",
-  nautilus: "/img/cun/Nautilus.jpg",
+  caribe: "/img/cun/Caribe.webp",
+  marina: "/img/cun/Marina.webp",
+  nautilus: "/img/cun/Nautilus.webp",
 
   //foto/playa
-  allegro: "/img/playa/Allegro.jpg",
-  galerias: "/img/playa/Galerias.jpg",
-  riviera: "/img/playa/Riviera.jpg",
-  royal: "/img/playa/RoyalHideaway.jpg",
-  yucatan: "/img/playa/Yucatan.jpg",
+  allegro: "/img/playa/Allegro.webp",
+  galerias: "/img/playa/Galerias.webp",
+  riviera: "/img/playa/Riviera.webp",
+  royal: "/img/playa/RoyalHideaway.webp",
+  yucatan: "/img/playa/Yucatan.webp",
 
 
   //luxe island
-  li_boutique: "img/li/li_boutique.svg",
-  li_jewelry: "img/li/li_jewelry.svg",
+  li_boutique: "/img/li/li_boutique.svg",
+  li_jewelry: "/img/li/li_jewelry.svg",
 
   //productos categorias
   pharmacyIcon: "/img/productos/Pharmacy.png",
@@ -169,8 +169,8 @@ export const svgs: Svgs = {
   sunscreensIcon: "/svg/producto/Sunscreens.svg",
 
   //foto
-  cun: "/svg/foto/cun.svg", /*  */
-  playa: "/svg/foto/playa.svg", /*  */
+  cun: "/svg/foto/cun.webp", /*  */
+  playa: "/svg/foto/playa.webp", /*  */
 
   secrets: "/svg/foto/cun/GranHyatt.png",
   secretsBranch: "/svg/foto/cun/GranHyattBranch.png",

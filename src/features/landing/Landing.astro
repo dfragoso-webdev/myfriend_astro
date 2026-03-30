@@ -2,7 +2,6 @@
 // src/features/landing/Landing.astro
 import About from "./components/About/About";
 import Banner from "./components/Banner/Banner";
-import BranchesCarousel from "./components/Branches/BranchesCarousel";
 import FollowUs from "./components/FollowUs/FollowUs";
 import HomeService from "./components/HomeService/HomeService";
 import LuxeIslandBand from "./components/LuxeIslandBand/LuxeIslandBand";
@@ -14,7 +13,19 @@ import { video as videoAssets } from "@/mediaRoutes";
 interface Props {
   lang: string;
   bannerImages?: { images: string[]; imagesMobile: string[] };
-  branches?: any[];
+  featuredStores?: Array<{
+    id: string;
+    name: string;
+    nameEn: string;
+    image: string;
+    city: string;
+    cityEn: string;
+    citySlug: string;
+    slug: string;
+    address: string;
+    email: string;
+    phone: string;
+  }>;
   videoSrc?: string;
   bg?: string;
 }
@@ -22,7 +33,7 @@ interface Props {
 const {
   lang,
   bannerImages,
-  branches,
+  featuredStores = [],
   videoSrc = videoAssets.myfriend,
   bg = "",
 } = Astro.props;
@@ -33,7 +44,7 @@ const {
     <Banner
       images={bannerImages?.images || []}
       imagesMobile={bannerImages?.imagesMobile || []}
-      client:only="react"
+      client:load
     />
   </section>
 
@@ -46,7 +57,7 @@ const {
   </section>
 
   <section id="premium-select">
-    <PremiumSelect client:visible />
+    <PremiumSelect client:idle />
   </section>
 
   <section id="products">
@@ -54,18 +65,16 @@ const {
   </section>
 
   <section id="home-service">
-    <HomeService client:visible  />
+    <HomeService client:idle />
   </section>
 
   <section id="luxe-island">
-    <LuxeIslandBand client:visible />
+    <LuxeIslandBand client:idle />
   </section>
 
   <section id="follow-us">
-    <FollowUs client:visible />
+    <FollowUs client:idle />
   </section>
-
-  <BranchesCarousel branches={branches || []} lang={lang} client:visible />
 </main>
 
 <script>

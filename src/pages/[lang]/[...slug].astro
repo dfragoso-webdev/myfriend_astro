@@ -1,0 +1,66 @@
+---
+// src/pages/[lang]/[...slug].astro
+import Layout from "@/layouts/Layout.astro";
+import StorePage from "@/features/stores/StorePage";
+import { LANGUAGES, DEFAULT_LANG, type Language } from "@/i18n/constants";
+import { slugify } from "@/utils/slugify";
+import storeDetails from "@/data/storeDetails.json";
+
+export function getStaticPaths() {
+  const paths = [];
+  
+  // Generar slugs para todas las tiendas
+  for (const lang of LANGUAGES) {
+    // Tiendas de Cancún
+    for (const store of storeDetails.cancun.images) {
+      const storeSlug = slugify(store.title);
+      const path = {
+        params: {
+          lang,
+          slug: `cancun/${storeSlug}`
+        }
+      };
+      paths.push(path);
+      console.log(`Generando ruta: /${lang}/cancun/${storeSlug}`);
+    }
+    
+    // Tiendas de Playa del Carmen
+    for (const store of storeDetails.playa.images) {
+      const storeSlug = slugify(store.title);
+      const path = {
+        params: {
+          lang,
+          slug: `playa/${storeSlug}`
+        }
+      };
+      paths.push(path);
+      console.log(`Generando ruta: /${lang}/playa/${storeSlug}`);
+    }
+  }
+  
+  console.log('Total de rutas generadas:', paths.length);
+  return paths;
+}
+
+// Esto se ejecuta en el servidor cuando se solicita la página
+const { lang, slug } = Astro.params;
+const [city, store] = slug?.split('/') || [];
+
+console.log('📄 Página solicitada:', { lang, slug, city, store });
+
+if (!lang || !LANGUAGES.includes(lang as Language)) {
+  console.log('❌ Idioma no válido, redirigiendo');
+  return Astro.redirect(`/${DEFAULT_LANG}`);
+}
+
+if (!city || !store) {
+  console.log('❌ No city or store, redirecting');
+  return Astro.redirect(`/${lang}`);
+}
+
+console.log('✅ Renderizando StorePage para:', { city, store });
+---
+
+<Layout lang={lang}>
+  <StorePage lang={lang} city={city} store={store} client:load />
+</Layout>

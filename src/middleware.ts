@@ -9,22 +9,23 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const url = new URL(context.request.url);
   const pathParts = url.pathname.split("/").filter(Boolean);
   
-  // Si el primer segmento de la ruta es "undefined", redirigir
+  // Si no hay segmentos, redirigir a la raíz con idioma por defecto
+  if (pathParts.length === 0) {
+    return context.redirect(`/${DEFAULT_LANG}`, 307);
+  }
+  
+  // Si el primer segmento es "undefined", redirigir (esto puede pasar por algún bug)
   if (pathParts[0] === "undefined") {
-    console.log(`🔄 Middleware: Redirigiendo ${url.pathname} a /${DEFAULT_LANG}/${pathParts.slice(1).join("/")}`);
-    
-    // Construir la nueva URL con el idioma por defecto
     const newPath = `/${DEFAULT_LANG}/${pathParts.slice(1).join("/")}`;
-    return context.redirect(newPath, 301);
+    return context.redirect(newPath, 307);
   }
   
-  // Si hay un segmento de idioma pero no es válido, redirigir al idioma por defecto
-  if (pathParts[0] && !VALID_LANGS.includes(pathParts[0]) && pathParts[0] !== "undefined") {
-    console.log(`🔄 Middleware: Idioma inválido ${pathParts[0]}, redirigiendo a /${DEFAULT_LANG}/${pathParts.slice(1).join("/")}`);
-    const newPath = `/${DEFAULT_LANG}/${pathParts.slice(1).join("/")}`;
-    return context.redirect(newPath, 301);
+  // Si no hay idioma en la URL (primer segmento no es es/en), redirigir
+  if (!VALID_LANGS.includes(pathParts[0])) {
+    const newPath = `/${DEFAULT_LANG}/${pathParts.join("/")}`;
+    return context.redirect(newPath, 307);
   }
   
-  // Continuar con la petición normalmente
+  // Para todas las demás rutas, continuar normalmente
   return next();
 });

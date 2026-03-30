@@ -71,13 +71,13 @@ export function LanguageSwitcher({
   // VERSIÓN MÓVIL
   if (mobile || isMobile) {
     return (
-      <div className={`relative w-full group ${className}`}>
+      <div className={`relative w-fit group ${className}`}>
         <select
           value={currentLang}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => 
             handleLanguageChange(e.target.value as Language)
           }
-          className="w-full appearance-none bg-gradient-to-b from-white to-gray-50/80 border border-gray-200 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#A91D3A]/20 focus:border-[#A91D3A] cursor-pointer shadow-sm hover:shadow-md transition-all duration-300"
+          className="w-full appearance-none bg-gradient-to-b from-white to-gray-50/80 border border-gray-200 rounded-2xl px-8 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#A91D3A]/20 focus:border-[#A91D3A] cursor-pointer shadow-sm hover:shadow-md transition-all duration-300"
           aria-label="Seleccionar idioma"
         >
           {Object.entries(LANGUAGE_META).map(([code, { label, flag }]) => (

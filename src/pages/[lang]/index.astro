@@ -1,9 +1,10 @@
 ---
-// src/pages/[lang]/index.astro
 import Layout from "@/layouts/Layout.astro";
 import Landing from "@/features/landing/Landing.astro";
 import { LANGUAGES, DEFAULT_LANG, type Language } from "@/i18n/constants";
 import { svgs } from "@/mediaRoutes";
+import storeDetails from "@/data/storeDetails.json";
+import { slugify } from "@/utils/slugify";
 
 export function getStaticPaths() {
   return LANGUAGES.map((lang) => ({ params: { lang } }));
@@ -15,16 +16,53 @@ if (!lang || !LANGUAGES.includes(lang)) {
   return Astro.redirect(`/${DEFAULT_LANG}`);
 }
 
-// Definir las imágenes del banner
 const bannerImages = {
   images: [svgs.banner1, svgs.banner2, svgs.banner3, svgs.banner4],
-  imagesMobile: [svgs.mbanner1, svgs.mbanner2, svgs.mbanner3, svgs.mbanner4]
+  imagesMobile: [svgs.mbanner1, svgs.mbanner2, svgs.mbanner3, svgs.mbanner4],
 };
+
+// Generar los datos de las tiendas destacadas usando slugify
+const featuredStoresData = [
+  // Tiendas de Cancún
+  ...storeDetails.cancun.images.map(store => ({
+    id: slugify(store.title),
+    name: store.title,
+    nameEn: store.title,
+    image: store.image,
+    city: "Cancun",
+    cityEn: "Cancun",
+    citySlug: "cancun",
+    slug: slugify(store.title),
+    address: store.address,
+    email: store.email,
+    phone: store.phone,
+  })),
+  // Tiendas de Playa del Carmen
+  ...storeDetails.playa.images.map(store => ({
+    id: slugify(store.title),
+    name: store.title,
+    nameEn: store.title,
+    image: store.image,
+    city: "Playa del Carmen",
+    cityEn: "Playa del Carmen",
+    citySlug: "playa",
+    slug: slugify(store.title),
+    address: store.address,
+    email: store.email,
+    phone: store.phone,
+  }))
+];
 ---
 
-<Layout lang={lang} title="My Friend">
+<Layout
+  lang={lang}
+  title="My Friend"
+  lcpImage={bannerImages.images[0]}
+  lcpImageMobile={bannerImages.imagesMobile[0]}
+>
   <Landing 
     lang={lang} 
     bannerImages={bannerImages}
+    featuredStores={featuredStoresData}
   />
 </Layout>

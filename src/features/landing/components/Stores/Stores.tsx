@@ -23,6 +23,7 @@ const Stores = ({ lang = "es" }: StoresProps) => {
   const { t } = useTranslation("stores");
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [branches, setBranches] = useState<any[]>([]);
+  const [currentCityId, setCurrentCityId] = useState<string>(""); // Guardar el cityId
 
   const cities: City[] = [
     {
@@ -54,14 +55,17 @@ const Stores = ({ lang = "es" }: StoresProps) => {
         email: branch.email,
         phone: branch.phone,
       }));
+      
       setBranches(branchesData);
       setSelectedCity(cityId);
+      setCurrentCityId(cityId); // Guardar el cityId
     }
   };
 
   const handleBackToCities = () => {
     setSelectedCity(null);
     setBranches([]);
+    setCurrentCityId("");
   };
 
   const renderContent = () => {
@@ -96,7 +100,11 @@ const Stores = ({ lang = "es" }: StoresProps) => {
             </h3>
           </div>
 
-          <BranchesCarousel branches={branches} lang={lang} />
+          <BranchesCarousel 
+            branches={branches} 
+            cityId={currentCityId} // Pasar cityId
+            lang={lang} 
+          />
         </div>
       );
     }

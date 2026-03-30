@@ -1,4 +1,4 @@
-// src/features/landing/components/BranchesCarousel.tsx
+// src/features/landing/components/Branches/BranchesCarousel.tsx
 import { useEffect, useRef, useState } from "react";
 import BranchCard from "./BranchCard";
 import { FadeInItem } from "@/shared/ui/Animation/FadeInItem";
@@ -13,10 +13,11 @@ interface Branch {
 
 interface BranchesCarouselProps {
   branches: Branch[];
+  cityId: string; // Añadir cityId como prop requerida
   lang?: string;
 }
 
-const BranchesCarousel = ({ branches, lang = "es" }: BranchesCarouselProps) => {
+const BranchesCarousel = ({ branches, cityId, lang = "es" }: BranchesCarouselProps) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [cardsPerView, setCardsPerView] = useState(1);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -72,7 +73,6 @@ const BranchesCarousel = ({ branches, lang = "es" }: BranchesCarouselProps) => {
 
   return (
     <div ref={containerRef} className="relative w-full">
-      {/* Grid de cards con animaciones */}
       <div className="px-4 md:px-6 lg:px-8">
         <div 
           key={currentPage}
@@ -91,6 +91,7 @@ const BranchesCarousel = ({ branches, lang = "es" }: BranchesCarouselProps) => {
             >
               <BranchCard 
                 branch={branch}
+                cityId={cityId} // Pasar cityId a cada BranchCard
                 index={currentPage * cardsPerView + idx}
                 lang={lang}
               />

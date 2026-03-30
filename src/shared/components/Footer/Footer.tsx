@@ -3,7 +3,7 @@ import { useTranslation } from '@/i18n';
 import { images, svgs } from '@/mediaRoutes';
 
 const Footer = () => {
-  const { t } = useTranslation('footer');   // ← cambiamos de 'common' a 'footer'
+  const { t } = useTranslation('footer'); 
   const year = new Date().getFullYear();
 
   const NAV_ITEMS = [

@@ -2,16 +2,26 @@
 // src/layouts/Layout.astro
 import "@/styles/globals.css";
 import Navbar from "@/shared/components/Navigation/Navbar";
-import Footer from "@/shared/components/Footer/Footer"; // ahora .tsx
+import Footer from "@/shared/components/Footer/Footer";
 import { I18nProvider } from "@/i18n/I18nProvider";
+import { BranchProvider } from "@/features/branches/BranchContext";
 import type { Language } from "@/i18n/constants";
 
 interface Props {
   title?: string;
+  description?: string;
   lang?: Language;
+  lcpImage?: string;
+  lcpImageMobile?: string;
 }
 
-const { title = "My Friend", lang = "es" } = Astro.props as Props;
+const {
+  title = "My Friend",
+  description = "",
+  lang = "es",
+  lcpImage,
+  lcpImageMobile,
+} = Astro.props as Props;
 ---
 
 <!doctype html>
@@ -19,13 +29,35 @@ const { title = "My Friend", lang = "es" } = Astro.props as Props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
     <title>{title}</title>
+
+    {
+      lcpImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={lcpImage}
+          imagesrcset={
+            lcpImageMobile
+              ? `${lcpImageMobile} 768w, ${lcpImage} 1920w`
+              : undefined
+          }
+          imagesizes="100vw"
+        />
+      )
+    }
   </head>
-  <body>
-    <I18nProvider lang={lang}>
-      <Navbar client:visible />
-      <main><slot /></main>
-      <Footer client:visible />
+    <body>
+    <I18nProvider lang={lang} client:load>
+      {/* BranchProvider debe envolver todo el contenido que use useBranch */}
+      <BranchProvider>
+        <Navbar client:load />
+        <main>
+          <slot />
+        </main>
+        <Footer client:idle />
+      </BranchProvider>
     </I18nProvider>
   </body>
 </html>

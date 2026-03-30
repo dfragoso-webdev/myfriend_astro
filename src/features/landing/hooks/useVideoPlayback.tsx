@@ -1,12 +1,15 @@
 // src/features/landing/hooks/useVideoPlayback.ts
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 interface UseVideoPlaybackProps {
   threshold?: number;
   autoPlay?: boolean;
 }
 
-export const useVideoPlayback = ({ threshold = 0.3, autoPlay = true }: UseVideoPlaybackProps = {}) => {
+export const useVideoPlayback = ({
+  threshold = 0.01,
+  autoPlay = true,
+}: UseVideoPlaybackProps = {}) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -20,7 +23,7 @@ export const useVideoPlayback = ({ threshold = 0.3, autoPlay = true }: UseVideoP
           }
         }
       },
-      { threshold }
+      { threshold },
     );
 
     const currentVideoRef = videoRef.current;

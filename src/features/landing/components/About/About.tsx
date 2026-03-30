@@ -1,5 +1,5 @@
 // src/features/landing/About.tsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from '@/i18n';
 import { AboutText } from '@/features/landing/components/About/AboutText';
 import { AboutVideo } from '@/features/landing/components/About/AboutVideo';
@@ -13,21 +13,8 @@ interface AboutProps {
 
 const About: React.FC<AboutProps> = ({ videoSrc, bg }) => {
   const { t } = useTranslation('about');
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
-  const [isVisible, setIsVisible] = useState(false);
   const { videoRef, isVisible: isVideoVisible } = useVideoPlayback({ threshold: 0.3 });
 
-  useEffect(() => {
-    setIsVisible(true);
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   const stats = {
     number: '15+',
@@ -38,50 +25,50 @@ const About: React.FC<AboutProps> = ({ videoSrc, bg }) => {
 
   return (
     <section className="relative w-full py-20 px-4 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-gray-50">
-      {/* ... efectos de fondo ... */}
-      <div
-        className="absolute inset-0 opacity-30 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(169, 29, 58, 0.1) 0%, transparent 50%)`,
-        }}
-      />
-      <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.06) 1px, transparent 0)', backgroundSize: '40px 40px' }} aria-hidden="true" />
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse animation-delay-1000" />
+      <div className="absolute inset-0 opacity-30 pointer-events-none" aria-hidden="true">
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(circle at 50% 50%, rgba(169, 29, 58, 0.08) 0%, transparent 60%)',
+          }}
+        />
       </div>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(0,0,0,0.06) 1px, transparent 0)',
+          backgroundSize: '40px 40px',
+        }}
+        aria-hidden="true"
+      />
 
-      <div className={`relative z-10 max-w-7xl mx-auto transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+      <div className="relative z-10 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 md:gap-16 lg:gap-20 items-center">
-          <div className={`transition-all duration-1000 transform ${isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'}`}>
-            <AboutText
-              title={t('title')}
-              text={t('text')}
-              since={t('since')}
-              commitmentQuote={t('commitment_quote')}
-              isVisible={isVisible}
-            />
-          </div>
+          <AboutText
+            title={t('title')}
+            text={t('text')}
+            since={t('since')}
+            commitmentQuote={t('commitment_quote')}
+          />
 
-          <div className={`transition-all duration-1000 transform delay-200 ${isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'}`}>
-            <AboutVideo
-              videoRef={videoRef}
-              videoSrc={videoSrc}
-              isVisible={isVideoVisible}
-              stats={stats}
-            />
-          </div>
+          <AboutVideo
+            videoRef={videoRef}
+            videoSrc={videoSrc}
+            isVisible={isVideoVisible}
+            stats={stats}
+          />
         </div>
 
         <div className="mt-12 lg:hidden">
           <AboutStatsMobile stats={stats} happyCustomers={t('happy_customers')} />
         </div>
 
+        {/* Stats desktop */}
         <div className="hidden lg:block mt-16 text-center">
           <div className="inline-flex items-center gap-6 px-8 py-4 bg-white rounded-full shadow-lg">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
@@ -90,10 +77,10 @@ const About: React.FC<AboutProps> = ({ videoSrc, bg }) => {
                 <div className="text-xs text-gray-500 uppercase tracking-wider">{stats.label}</div>
               </div>
             </div>
-            <div className="w-px h-10 bg-gray-200" />
+            <div className="w-px h-10 bg-gray-200" aria-hidden="true" />
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" />
                 </svg>
               </div>

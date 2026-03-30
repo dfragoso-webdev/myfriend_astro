@@ -17,7 +17,7 @@ interface MousePosition {
 }
 
 const FollowUs = () => {
-  const { t } = useTranslation('followUs');   // ← cambiamos a 'followUs'
+  const { t } = useTranslation("followUs"); // ← cambiamos a 'followUs'
   const [mousePosition, setMousePosition] = useState<MousePosition>({
     x: 50,
     y: 50,
@@ -95,18 +95,18 @@ const FollowUs = () => {
           {/* Título principal con gradiente */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             <span className="text-primary bg-clip-text">
-              {t('follow_us_title')}
+              {t("follow_us_title")}
             </span>
           </h1>
 
           {/* Descripción */}
           <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            {t('follow_us_text')}
+            {t("follow_us_text")}
           </p>
         </div>
 
         {/* Grid de redes sociales */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-3 gap-4 md:gap-8 max-w-4xl mx-auto">
           {socialIcons.map((icon, index) => (
             <a
               key={icon.alt}
@@ -125,53 +125,55 @@ const FollowUs = () => {
               {/* Efecto de brillo detrás */}
               <div
                 className={`
-                  absolute -inset-1 bg-gradient-to-r 
-                  rounded-2xl blur-xl opacity-0 group-hover:opacity-70 
-                  transition duration-500
-                `}
+          absolute -inset-1 bg-gradient-to-r 
+          rounded-2xl blur-xl opacity-0 group-hover:opacity-70 
+          transition duration-500
+        `}
                 aria-hidden="true"
               />
 
               {/* Contenedor principal */}
-              <div className="relative p-8 transform hover:-translate-y-2 transition-transform duration-500">
+              <div className="relative p-4 md:p-8 transform hover:-translate-y-2 transition-transform duration-500">
                 {/* Círculo decorativo */}
                 <div
                   className={`
-                    absolute top-0 right-0 w-24 h-24 
-                    rounded-full filter blur-3xl opacity-0 group-hover:opacity-20 
-                    transition duration-500
-                  `}
+            absolute top-0 right-0 w-20 md:w-24 h-20 md:h-24 
+            rounded-full filter blur-3xl opacity-0 group-hover:opacity-20 
+            transition duration-500
+          `}
                   aria-hidden="true"
                 />
 
                 {/* Contenido */}
                 <div className="relative z-10">
                   {/* Icono con animación */}
-                  <div className="flex justify-center mb-4">
+                  <div className="flex justify-center mb-3 md:mb-4">
                     <div className="relative">
                       <div
                         className={`
-                          relative w-24 h-24 bg-gradient-to-br ${icon.color} 
-                          rounded-2xl flex items-center justify-center
-                          group-hover:scale-110 transition-transform duration-300
-                        `}
+                  relative w-16 h-16 md:w-24 md:h-24 bg-gradient-to-br ${icon.color} 
+                  rounded-xl md:rounded-2xl flex items-center justify-center
+                  group-hover:scale-110 transition-transform duration-300
+                `}
                       >
                         <img
                           src={icon.src}
                           alt=""
-                          className="w-10 h-10 md:w-12 md:h-12 filter brightness-0 invert"
+                          className="w-8 h-8 md:w-12 md:h-12 filter brightness-0 invert"
                           loading="lazy"
                         />
                       </div>
                     </div>
                   </div>
 
-                  {/* Estadísticas */}
-                  <div className="flex items-center justify-center gap-2 text-gray-600">
-                    <span className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+                  {/* Estadísticas - Ahora verticales en todos los dispositivos */}
+                  <div className="flex flex-col md:flex-row items-center justify-center gap-1 text-gray-600">
+                    <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
                       {icon.stats}
                     </span>
-                    <span className="text-sm">{t('followers')}</span>
+                    <span className="text-xs md:text-sm text-center">
+                      {t("followers")}
+                    </span>
                   </div>
                 </div>
               </div>

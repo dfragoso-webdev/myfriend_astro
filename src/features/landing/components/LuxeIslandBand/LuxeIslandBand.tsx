@@ -34,9 +34,9 @@ const LuxeIslandBand = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-16 lg:gap-24">
             <a
-              href="/luxe-island"
+              href="https://www.myfriend.mx/luxe-island"
               className="group transform transition-all duration-500 hover:scale-105"
-              aria-label="Luxe Island Boutique"
+              aria-label="Luxe Island Boutique" target="_blank" rel="noopener noreferrer"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-amber-400/10 group-hover:bg-amber-400/20 blur-2xl transition-all duration-500 rounded-full" />
@@ -53,9 +53,9 @@ const LuxeIslandBand = () => {
             <div className="block md:hidden w-16 h-px bg-gradient-to-r from-transparent via-amber-500/40 to-transparent" />
 
             <a
-              href="/#"
+              href="https://luxeisland.mx/"
               className="group transform transition-all duration-500 hover:scale-105"
-              aria-label="Luxe Island Jewelry"
+              aria-label="Luxe Island Jewelry" target="_blank" rel="noopener noreferrer"
             >
               <div className="relative">
                 <div className="absolute inset-0 bg-amber-400/10 group-hover:bg-amber-400/20 blur-2xl transition-all duration-500 rounded-full" />
