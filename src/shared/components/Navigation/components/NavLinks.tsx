@@ -1,5 +1,5 @@
 // src/shared/components/Navigation/components/NavLinks.tsx
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 
 interface NavLinksProps {
   items: Array<{ href: string; label: string }>;
@@ -40,6 +40,11 @@ export const NavLinks = ({
 };
 
 const NavLink = ({ item, active, isScrolled, onClick, orientation, isMobile }: any) => {
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    onClick(item.href);
+  }, [item.href, onClick]);
+
   const getTextColor = () => {
     if (orientation === 'vertical') {
       return 'text-gray-800 hover:text-secondary';
@@ -59,12 +64,9 @@ const NavLink = ({ item, active, isScrolled, onClick, orientation, isMobile }: a
   return (
     <a
       href={item.href}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(item.href);
-      }}
+      onClick={handleClick}
       className={`
-        relative transition-all duration-300 group overflow-hidden
+        relative transition-all duration-300 group overflow-hidden cursor-pointer
         ${orientation === 'horizontal' 
           ? 'px-4 py-2 text-sm font-medium rounded-full' 
           : 'py-3 px-6 rounded-2xl text-sm sm:text-base font-medium flex justify-between items-center'

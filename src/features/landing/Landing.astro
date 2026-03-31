@@ -40,6 +40,7 @@ const {
 ---
 
 <main>
+  {/* Asegurar que cada sección tiene un ID único que coincida con los href del navbar */}
   <section id="home">
     <Banner
       images={bannerImages?.images || []}
@@ -78,12 +79,8 @@ const {
 </main>
 
 <script>
+  // Remover el script anterior porque ahora lo manejamos con el hook
   if (window.location.hash) {
-    window.history.pushState(
-      {},
-      "",
-      window.location.pathname + window.location.search,
-    );
-    window.scrollTo({ top: 0, behavior: "instant" });
+    // No hacer nada aquí, el hook se encargará
   }
 </script>

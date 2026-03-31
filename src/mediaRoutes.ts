@@ -19,6 +19,15 @@ interface Images {
   deliIcon: string;
   kidsIcon: string;
   sunscreensIcon: string;
+
+  rhid1: string;
+  rhid2: string;
+  rhid3: string;
+  rhid4: string;
+  rhid5: string;
+  rhid6: string;
+  rhid7: string;
+  rhid8: string; 
 }
 
 interface Svgs {
@@ -68,7 +77,7 @@ interface Svgs {
   tulumBranch: string;
   cun: string;
   playa: string;
-    banner1: string;
+  banner1: string;
   banner2: string;
   banner3: string;
   banner4: string;
@@ -110,6 +119,15 @@ export const images: Images = {
   deliIcon: "/img/productos/Deli.png",
   kidsIcon: "/img/productos/Kids.png",
   sunscreensIcon: "/img/productos/Sunscreens.png",
+
+  rhid1: "/img/rhid/1.webp",
+  rhid2: "/img/rhid/2.webp",
+  rhid3: "/img/rhid/3.webp",
+  rhid4: "/img/rhid/4.webp",
+  rhid5: "/img/rhid/5.webp",
+  rhid6: "/img/rhid/6.webp",
+  rhid7: "/img/rhid/7.webp",
+  rhid8: "/img/rhid/8.webp",
 };
 
 export const svgs: Svgs = {
@@ -187,6 +205,7 @@ export const svgs: Svgs = {
   mbanner2: "/svg/banner/banner2_sm.svg",
   mbanner3: "/svg/banner/banner3_sm.svg",
   mbanner4: "/svg/banner/banner4_sm.svg",
+  
 };
 
 export const video: Video = {

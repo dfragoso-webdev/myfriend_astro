@@ -21,7 +21,7 @@ const {
   lang = "es",
   lcpImage,
   lcpImageMobile,
-} = Astro.props as Props;
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -47,10 +47,39 @@ const {
         />
       )
     }
+    
+    {/* Script para prevenir el scroll automático del navegador SOLO si tenemos hash */}
+    <script is:inline>
+      (function() {
+        // Solo prevenir el scroll automático si tenemos hash y estamos en la landing
+        if (window.location.hash && window.location.pathname.match(/^\/[a-z]{2}\/?$/)) {
+          // Guardar el hash
+          const hash = window.location.hash;
+          
+          // Prevenir el scroll automático del navegador
+          if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+          }
+          
+          // Limpiar el hash temporalmente
+          window.location.hash = '';
+          
+          // Restaurar el hash después de un pequeño delay
+          setTimeout(() => {
+            window.location.hash = hash;
+            // Restaurar scroll restoration después de un tiempo
+            setTimeout(() => {
+              if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'auto';
+              }
+            }, 500);
+          }, 100);
+        }
+      })();
+    </script>
   </head>
-    <body>
+  <body>
     <I18nProvider lang={lang} client:load>
-      {/* BranchProvider debe envolver todo el contenido que use useBranch */}
       <BranchProvider>
         <Navbar client:load />
         <main>

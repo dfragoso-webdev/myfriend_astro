@@ -46,7 +46,6 @@ export function getStaticPaths() {
 const { lang, slug } = Astro.params;
 const [city, store] = slug?.split('/') || [];
 
-console.log('📄 Página solicitada:', { lang, slug, city, store });
 
 if (!lang || !LANGUAGES.includes(lang as Language)) {
   console.log('❌ Idioma no válido, redirigiendo');
@@ -57,8 +56,6 @@ if (!city || !store) {
   console.log('❌ No city or store, redirecting');
   return Astro.redirect(`/${lang}`);
 }
-
-console.log('✅ Renderizando StorePage para:', { city, store });
 ---
 
 <Layout lang={lang}>

@@ -2,12 +2,12 @@
 import { useScrollDetection } from "./hooks/useScrollDetection";
 import { useActiveSection } from "./hooks/useActiveSection";
 import { useMobileMenu } from "./hooks/useMobileMenu";
-import { useSmoothScroll } from "./hooks/useSmoothScroll";
+import { useSmartNavigation } from "@/shared/hooks/useSmartNavigation";
 import { Logo } from "./components/Logo";
 import { NavLinks } from "./components/NavLinks";
 import { MobileMenu } from "./components/MobileMenu";
 import { useTranslation } from "@/i18n";
-import { useMemo, useCallback } from "react";
+import { useMemo, useCallback, useEffect } from "react";
 import { MenuButton } from "./components/MenuButton";
 import { LanguageSwitcher } from "@/shared/ui/LanguageSwitcher/LanguageSwitcher";
 
@@ -15,6 +15,7 @@ export default function Navbar() {
   const { t } = useTranslation('navbar');
   const isScrolled = useScrollDetection(20);
   const { isOpen, toggle, close } = useMobileMenu();
+  const { navigate, scrollToSection } = useSmartNavigation({ offset: 80, updateUrl: false });
   
   const NAV_ITEMS = useMemo(() => [
     { href: "#home", label: t('home') },
@@ -27,12 +28,36 @@ export default function Navbar() {
   ], [t]);
 
   const { activeItem } = useActiveSection(NAV_ITEMS);
-  const { scrollTo } = useSmoothScroll({ offset: 80 });
 
   const handleNavClick = useCallback((href: string) => {
     close();
-    scrollTo(href);
-  }, [close, scrollTo]);
+    navigate(href);
+  }, [close, navigate]);
+
+  // Manejar navegación inicial si hay hash en la URL (cuando se carga la página)
+  useEffect(() => {
+    const handleInitialNavigation = () => {
+      if (window.location.hash) {
+        const hash = window.location.hash;
+        // Pequeño delay para asegurar que todo está renderizado
+        setTimeout(() => {
+          scrollToSection(hash);
+          // Limpiar el hash de la URL después del scroll si estamos en landing
+          if (window.location.pathname.match(/^\/[a-z]{2}\/?$/)) {
+            window.history.replaceState({}, '', window.location.pathname);
+          }
+        }, 300);
+      }
+    };
+
+    // Ejecutar después de que la página esté completamente cargada
+    if (document.readyState === 'complete') {
+      handleInitialNavigation();
+    } else {
+      window.addEventListener('load', handleInitialNavigation);
+      return () => window.removeEventListener('load', handleInitialNavigation);
+    }
+  }, [scrollToSection]);
 
   return (
     <>
@@ -43,7 +68,7 @@ export default function Navbar() {
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
-          <Logo isScrolled={isScrolled}  />
+          <Logo isScrolled={isScrolled} />
 
           {/* Desktop Navigation */}
           <div className="hidden xl:flex items-center gap-1">

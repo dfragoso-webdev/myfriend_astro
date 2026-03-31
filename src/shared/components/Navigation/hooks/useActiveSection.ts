@@ -1,22 +1,49 @@
 // src/shared/components/Navigation/hooks/useActiveSection.ts
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+
 export const useActiveSection = (items: Array<{ href: string }>) => {
   const [activeItem, setActiveItem] = useState(items[0]?.href || "");
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 120;
-      const currentSection = [...items].reverse().find((item) => {
-        const el = document.querySelector(item.href) as HTMLElement;
-        return el && scrollPosition >= el.offsetTop;
-      });
-      if (currentSection) setActiveItem(currentSection.href);
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+  const updateActiveSection = useCallback(() => {
+    const scrollPosition = window.scrollY + 120;
+    
+    let currentSection = "";
+    for (let i = items.length - 1; i >= 0; i--) {
+      const item = items[i];
+      const el = document.querySelector(item.href) as HTMLElement;
+      if (el && scrollPosition >= el.offsetTop) {
+        currentSection = item.href;
+        break;
+      }
+    }
+    
+    setActiveItem(currentSection || items[0]?.href || "");
   }, [items]);
 
-  return { activeItem };
+  useEffect(() => {
+    updateActiveSection();
+    
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection, { passive: true });
+    
+    // También escuchar cambios de scroll programados
+    const observer = new MutationObserver(() => {
+      updateActiveSection();
+    });
+    
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class']
+    });
+    
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+      observer.disconnect();
+    };
+  }, [updateActiveSection]);
+
+  return { activeItem, updateActiveSection };
 };
