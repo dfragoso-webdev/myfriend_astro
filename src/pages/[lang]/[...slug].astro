@@ -21,7 +21,6 @@ export function getStaticPaths() {
         }
       };
       paths.push(path);
-      console.log(`Generando ruta: /${lang}/cancun/${storeSlug}`);
     }
     
     // Tiendas de Playa del Carmen
@@ -34,11 +33,9 @@ export function getStaticPaths() {
         }
       };
       paths.push(path);
-      console.log(`Generando ruta: /${lang}/playa/${storeSlug}`);
     }
   }
   
-  console.log('Total de rutas generadas:', paths.length);
   return paths;
 }
 

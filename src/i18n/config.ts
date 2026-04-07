@@ -3,7 +3,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { DEFAULT_LANG, NAMESPACES } from "./constants";
 
-// Importar traducciones (incluir followUs)
+// Importar traducciones existentes
 import enCommon from "./locales/en/common.json";
 import esCommon from "./locales/es/common.json";
 import enNavbar from "./locales/en/landing/navbar.json";
@@ -28,6 +28,10 @@ import enLuxeIslandBand from "./locales/en/landing/luxeIslandBand.json";
 import esLuxeIslandBand from "./locales/es/landing/luxeIslandBand.json";
 import esBanner from "./locales/es/landing/banner.json";
 import enBanner from "./locales/en/landing/banner.json";
+import enBranches from "./locales/en/landing/branches.json";
+import esBranches from "./locales/es/landing/branches.json";
+import es404 from "./locales/es/404.json";
+import en404 from "./locales/en/404.json";
 
 // Declaración de tipos
 declare module "i18next" {
@@ -47,6 +51,8 @@ declare module "i18next" {
         followUs: typeof enFollowUs;
         luxeIslandBand: typeof enLuxeIslandBand;
         banner: typeof enBanner;
+        branches: typeof enBranches;
+        "404": typeof en404;
       };
       es: {
         common: typeof esCommon;
@@ -61,6 +67,8 @@ declare module "i18next" {
         followUs: typeof esFollowUs;
         luxeIslandBand: typeof esLuxeIslandBand;
         banner: typeof esBanner;
+        branches: typeof esBranches;
+        "404": typeof es404;
       };
     };
   }
@@ -84,6 +92,8 @@ i18n
         followUs: enFollowUs,      
         luxeIslandBand: enLuxeIslandBand,
         banner: enBanner,
+        branches: enBranches,
+        "404": en404,
       },
       es: {
         common: esCommon,
@@ -98,6 +108,8 @@ i18n
         followUs: esFollowUs,      
         luxeIslandBand: esLuxeIslandBand,
         banner: esBanner,
+        branches: esBranches,
+        "404": es404,
       },
     },
     lng: DEFAULT_LANG,

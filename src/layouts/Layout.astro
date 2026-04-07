@@ -32,6 +32,14 @@ const {
     <meta name="description" content={description} />
     <title>{title}</title>
 
+    <link rel="icon" type="image/webp" href="/img/mf-logo.webp" />
+    <link rel="shortcut icon" type="image/webp" href="/img/mf-logo.webp" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/mf-logo.webp" />
+    
+    <meta name="theme-color" content="#a91d3a" />
+    <meta name="msapplication-TileColor" content="#a91d3a" />
+    <meta name="msapplication-TileImage" content="/img/mf-logo.webp" />
+    
     {
       lcpImage && (
         <link
@@ -48,26 +56,19 @@ const {
       )
     }
     
-    {/* Script para prevenir el scroll automático del navegador SOLO si tenemos hash */}
     <script is:inline>
       (function() {
-        // Solo prevenir el scroll automático si tenemos hash y estamos en la landing
         if (window.location.hash && window.location.pathname.match(/^\/[a-z]{2}\/?$/)) {
-          // Guardar el hash
           const hash = window.location.hash;
           
-          // Prevenir el scroll automático del navegador
           if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
           }
           
-          // Limpiar el hash temporalmente
           window.location.hash = '';
           
-          // Restaurar el hash después de un pequeño delay
           setTimeout(() => {
             window.location.hash = hash;
-            // Restaurar scroll restoration después de un tiempo
             setTimeout(() => {
               if ('scrollRestoration' in history) {
                 history.scrollRestoration = 'auto';

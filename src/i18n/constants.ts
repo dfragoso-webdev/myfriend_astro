@@ -21,6 +21,8 @@ export const NAMESPACES = [
   "followUs",
   "luxeIslandBand",
   "banner",
+  "branches",
+  "404",
 ] as const;
 
 export type Namespace = typeof NAMESPACES[number];

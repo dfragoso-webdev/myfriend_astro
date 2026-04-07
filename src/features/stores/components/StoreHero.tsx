@@ -1,6 +1,7 @@
 // src/features/stores/components/StoreHero.tsx
 import React, { useState, useEffect } from "react";
 import { svgs } from "@/mediaRoutes";
+import { useTranslation } from '@/i18n';
 
 interface StoreHeroProps {
   store: {
@@ -17,6 +18,7 @@ interface StoreHeroProps {
 const StoreHero: React.FC<StoreHeroProps> = ({ store, city, lang = "es" }) => {
   const isSpanish = lang === "es";
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { t } = useTranslation('branches');
 
   useEffect(() => {
     const img = new Image();
@@ -84,7 +86,7 @@ const StoreHero: React.FC<StoreHeroProps> = ({ store, city, lang = "es" }) => {
               </div>
               <div>
                 <p className="text-xs text-white/50 uppercase tracking-wider mb-0.5">
-                  {isSpanish ? "WHATSAPP" : "WHATSAPP"}
+                  WHATSAPP
                 </p>
                 <span className="text-base md:text-lg font-medium">
                   {store.phone}
@@ -105,7 +107,7 @@ const StoreHero: React.FC<StoreHeroProps> = ({ store, city, lang = "es" }) => {
               </div>
               <div>
                 <p className="text-xs text-white/50 uppercase tracking-wider mb-0.5">
-                  {isSpanish ? "CORREO ELECTRÓNICO" : "EMAIL"}
+                  {t('banner.email')}
                 </p>
                 <span className="text-base md:text-lg break-all">
                   {store.email}
@@ -125,7 +127,7 @@ const StoreHero: React.FC<StoreHeroProps> = ({ store, city, lang = "es" }) => {
               </div>
               <div>
                 <p className="text-xs text-white/50 uppercase tracking-wider mb-0.5">
-                  {isSpanish ? "UBICACIÓN" : "LOCATION"}
+                  {t('banner.address')}
                 </p>
                 <p className="text-base md:text-lg leading-relaxed max-w-md whitespace-pre-line">
                   {store.address}

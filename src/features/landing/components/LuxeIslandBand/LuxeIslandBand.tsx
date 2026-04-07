@@ -34,7 +34,7 @@ const LuxeIslandBand = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-16 lg:gap-24">
             <a
-              href="https://www.myfriend.mx/luxe-island"
+              href="https://luxeisland.myfriend.mx/"
               className="group transform transition-all duration-500 hover:scale-105"
               aria-label="Luxe Island Boutique" target="_blank" rel="noopener noreferrer"
             >

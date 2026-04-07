@@ -8,7 +8,6 @@ interface SocialIcon {
   alt: string;
   color: string;
   url: string;
-  stats: string;
 }
 
 interface MousePosition {
@@ -42,22 +41,19 @@ const FollowUs = () => {
       src: svgs.fbIcon,
       alt: "Facebook",
       color: "from-blue-600 to-blue-700",
-      url: "https://facebook.com",
-      stats: "355",
+      url: "https://www.facebook.com/MyFriendMx",
     },
     {
       src: svgs.tiktokIcon,
       alt: "TikTok",
       color: "from-black to-gray-800",
-      url: "https://tiktok.com",
-      stats: "10.2K",
+      url: "#",
     },
     {
       src: svgs.igIcon,
       alt: "Instagram",
       color: "from-pink-500 via-purple-500 to-orange-500",
-      url: "https://instagram.com",
-      stats: "5.8K",
+      url: "https://www.instagram.com/myfriendmx/?hl=es",
     },
   ];
 
@@ -166,15 +162,6 @@ const FollowUs = () => {
                     </div>
                   </div>
 
-                  {/* Estadísticas - Ahora verticales en todos los dispositivos */}
-                  <div className="flex flex-col md:flex-row items-center justify-center gap-1 text-gray-600">
-                    <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                      {icon.stats}
-                    </span>
-                    <span className="text-xs md:text-sm text-center">
-                      {t("followers")}
-                    </span>
-                  </div>
                 </div>
               </div>
             </a>

@@ -4,7 +4,6 @@ import StoreHero from './components/StoreHero';
 import StoreCarousel from './components/StoreCarousel';
 import { slugify } from '@/utils/slugify';
 import storeDetails from '@/data/storeDetails.json';
-
 interface StorePageProps {
   lang: string;
   city?: string;  // 'cancun' o 'playa'
@@ -44,7 +43,6 @@ const getStoreData = (citySlug: string, storeSlug: string): StoreData | null => 
     return null;
   }
   
-  console.log('Tienda encontrada:', storeData.title);
   
   return {
     ...storeData,
@@ -60,9 +58,7 @@ const StorePage: React.FC<StorePageProps> = ({ lang, city, store }) => {
   const [loading, setLoading] = useState(true);
   const isSpanish = lang === 'es';
 
-  useEffect(() => {
-    console.log('Buscando tienda:', { city, store });
-    
+  useEffect(() => {    
     if (city && store) {
       const data = getStoreData(city, store);
       setStoreData(data);
@@ -110,8 +106,6 @@ const StorePage: React.FC<StorePageProps> = ({ lang, city, store }) => {
       <StoreCarousel 
         storeId={storeData.slug} // Pasar el slug directamente
         lang={lang}
-        title={isSpanish ? "Galería de imágenes" : "Image gallery"}
-        titleEn="Image gallery"
       />
     </main>
   );

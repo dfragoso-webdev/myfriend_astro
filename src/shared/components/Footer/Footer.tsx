@@ -16,13 +16,13 @@ const Footer = () => {
   ];
   
   const SOCIALS = [
-    { href: "https://facebook.com/myfriend", icon: svgs.fbIcon, label: "Facebook", color: "from-blue-600 to-blue-700" },
-    { href: "https://tiktok.com/@myfriend", icon: svgs.tiktokIcon, label: "TikTok", color: "from-black to-gray-800" },
-    { href: "https://instagram.com/myfriend", icon: svgs.igIcon, label: "Instagram", color: "from-pink-500 via-purple-500 to-orange-500" },
+    { href: "https://www.facebook.com/MyFriendMx", icon: svgs.fbIcon, label: "Facebook", color: "from-blue-600 to-blue-700" },
+    { href: "#", icon: svgs.tiktokIcon, label: "TikTok", color: "from-black to-gray-800" },
+    { href: "https://www.instagram.com/myfriendmx/?hl=es", icon: svgs.igIcon, label: "Instagram", color: "from-pink-500 via-purple-500 to-orange-500" },
   ];
 
   const LUXE_BRANDS = [
-    { href: "https://www.myfriend.mx/luxe-island", image: images.li_boutique, alt: "Luxe Island Boutique", label: "Boutique" },
+    { href: "https://luxeisland.myfriend.mx/", image: images.li_boutique, alt: "Luxe Island Boutique", label: "Boutique" },
     { href: "https://luxeisland.mx/", image: images.li_jewelry, alt: "Luxe Island Jewelry", label: "Jewelry" },
   ];
 

@@ -1,0 +1,17 @@
+# public/.htaccess
+ErrorDocument 404 /404.html
+
+# También puedes configurar para las rutas con idioma
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Manejar 404 para rutas con idioma
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^[a-z]{2}/.*$ /404.html [L]
+    
+    # Manejar 404 para rutas sin idioma
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /404.html [L]
+</IfModule>

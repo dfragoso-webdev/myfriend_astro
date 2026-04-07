@@ -1,0 +1,21 @@
+---
+// src/pages/[lang]/404.astro
+import Layout from "@/layouts/Layout.astro";
+import { LANGUAGES, type Language } from "@/i18n/constants";
+import { NotFound } from "@/features/error/components/NotFound";
+
+export function getStaticPaths() {
+  return LANGUAGES.map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Language };
+
+const title = lang === "es" ? "404 - Página no encontrada" : "404 - Page Not Found";
+const description = lang === "es" 
+  ? "La página que buscas no existe"
+  : "The page you are looking for does not exist";
+---
+
+<Layout title={title} description={description} lang={lang}>
+  <NotFound lang={lang} client:load />
+</Layout>
